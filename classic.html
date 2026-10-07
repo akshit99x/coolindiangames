@@ -1,0 +1,590 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Khel Bharat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&display=swap">
+<style>
+/* Layout: festival-night hub; hero with live rangoli, game cards, one game stage at a time */
+:root{
+  --bg:#171233; --surface:#221b4a; --surface2:#2e2660; --fg:#f6efe0; --muted:#b9aedb; --line:rgba(255,255,255,.12);
+  --saffron:#ffa11f; --vermilion:#ff4d3d; --peacock:#19c2b2; --magenta:#e6399b; --on-accent:#1b1030;
+  --cellA:#2a2358; --cellB:#241e4e; --shadow:0 10px 30px rgba(0,0,0,.35);
+  --display:'Yatra One','Noto Sans Devanagari','Noto Sans',serif;
+  --body:'Noto Sans','Noto Sans Devanagari','Noto Sans Tamil','Noto Sans Bengali','Noto Sans Telugu',system-ui,sans-serif;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#f7f2ff; --surface:#ffffff; --surface2:#ece4fb; --fg:#231a4d; --muted:#62588c; --line:rgba(35,26,77,.14);
+  --saffron:#e07b00; --vermilion:#d63324; --peacock:#0b8f84; --magenta:#c2217f; --on-accent:#fff;
+  --cellA:#f1eafc; --cellB:#e6dcf7; --shadow:0 10px 30px rgba(60,40,120,.15); color-scheme:light}}
+:root[data-theme="light"]{
+  --bg:#f7f2ff; --surface:#ffffff; --surface2:#ece4fb; --fg:#231a4d; --muted:#62588c; --line:rgba(35,26,77,.14);
+  --saffron:#e07b00; --vermilion:#d63324; --peacock:#0b8f84; --magenta:#c2217f; --on-accent:#fff;
+  --cellA:#f1eafc; --cellB:#e6dcf7; --shadow:0 10px 30px rgba(60,40,120,.15); color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:400 16px/1.5 var(--body);padding-block:0 40px;overflow-x:hidden}
+.display{font-family:var(--display);font-weight:400;letter-spacing:.01em;text-wrap:balance}
+html[lang=ta] .display,html[lang=bn] .display,html[lang=te] .display{font-family:var(--body);font-weight:700}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--saffron);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:16px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;margin-right:auto}
+.brand svg{width:34px;height:34px}
+.brand b{font-size:22px;line-height:1}
+.langs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px;max-width:100%;overflow-x:auto}
+.langs button{border:0;background:none;padding:5px 12px;border-radius:999px;font-size:14px;font-weight:600;white-space:nowrap;color:var(--muted)}
+.langs button[aria-pressed=true]{background:var(--saffron);color:var(--on-accent)}
+.icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
+.icon-btn svg{width:18px;height:18px}
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;padding-block:56px 48px;pointer-events:none}
+.hero h1{margin:0 0 12px;font-size:clamp(38px,7vw,76px);line-height:1.05;max-width:11em}
+.hero h1 em{font-style:normal;color:var(--saffron)}
+.hero p{margin:0;max-width:30em;color:var(--muted);font-size:18px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.chip{border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 80%,transparent);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600}
+.chip b{color:var(--saffron)}
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;padding-block:28px}
+.card{display:flex;flex-direction:column;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;padding:0;transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:var(--shadow);border-color:var(--saffron)}
+.card .art{height:130px;display:grid;place-items:center;color:#fff}
+.card .art svg{width:104px;height:104px;overflow:visible}
+.card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{margin:0;font-size:24px}
+.card p{margin:0;color:var(--muted);font-size:14.5px;flex:1}
+.card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;color:var(--muted)}
+.go{background:var(--saffron);color:var(--on-accent);border-radius:999px;padding:5px 14px;font-weight:700}
+.a1{background:linear-gradient(135deg,#d6336c,#ff8a3d)}.a2{background:linear-gradient(135deg,#0b8f84,#4cc9f0)}
+.a3{background:linear-gradient(135deg,#ff7a18,#e6399b)}.a4{background:linear-gradient(135deg,#6f42c1,#19c2b2)}
+.a5{background:linear-gradient(135deg,#f4a300,#d6336c)}
+footer{color:var(--muted);font-size:13px;text-align:center;padding-top:8px}
+/* stage */
+.stage-head{display:flex;align-items:center;gap:12px;padding-block:18px 8px;flex-wrap:wrap}
+.stage-head h2{margin:0;font-size:clamp(26px,5vw,38px)}
+.btn{border:0;border-radius:12px;background:var(--saffron);color:var(--on-accent);font-weight:700;padding:10px 18px;transition:transform .12s,filter .12s}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.96)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:var(--surface);color:var(--fg);border:1px solid var(--line)}
+.btn.big{font-size:18px;padding:14px 24px;width:100%}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px 12px;font-size:14px;font-variant-numeric:tabular-nums}
+.stat b{color:var(--saffron)}
+/* Moksha Patam */
+.mk{display:grid;grid-template-columns:minmax(0,600px) minmax(220px,1fr);gap:20px;align-items:start;padding-block:8px 20px}
+.board{position:relative;aspect-ratio:1;width:100%;border-radius:14px;overflow:hidden;border:2px solid var(--saffron);box-shadow:var(--shadow)}
+.cells{position:absolute;inset:0;display:grid;grid-template:repeat(10,1fr)/repeat(10,1fr)}
+.cell{font-size:clamp(8px,1.6vw,12px);padding:2px 3px;color:var(--muted);background:var(--cellA);font-variant-numeric:tabular-nums}
+.cell.alt{background:var(--cellB)}
+.cell.up{background:color-mix(in srgb,var(--peacock) 25%,var(--cellA))}
+.cell.dn{background:color-mix(in srgb,var(--vermilion) 25%,var(--cellA))}
+.cell.end{background:linear-gradient(135deg,var(--saffron),var(--magenta));color:#fff;font-weight:700}
+.board svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pawn{position:absolute;width:5.2%;height:5.2%;border-radius:50%;transform:translate(-50%,-50%);border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.5);transition:left .16s ease,top .16s ease;z-index:3}
+.pawn.p0{background:var(--saffron)}.pawn.p1{background:var(--peacock)}
+.side{display:flex;flex-direction:column;gap:14px}
+.die{width:84px;height:84px;margin-inline:auto;background:#fff;border-radius:16px;box-shadow:var(--shadow);display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:10px;gap:2px}
+.die i{width:100%;height:100%;border-radius:50%;place-self:center;max-width:15px;max-height:15px}
+.die i.on{background:#2a1a5e}
+.die.roll{animation:tumble .5s linear infinite}
+@keyframes tumble{to{transform:rotate(360deg)}}
+.turn{text-align:center;font-weight:700;font-size:18px}
+.turn.you{color:var(--saffron)}.turn.cpu{color:var(--peacock)}
+.log{display:flex;flex-direction:column;gap:6px;font-size:14px}
+.log div{padding:8px 12px;border-radius:10px;background:var(--surface);border-left:4px solid var(--muted)}
+.log .up{border-color:var(--peacock)}.log .dn{border-color:var(--vermilion)}
+.log .you{outline:1px solid var(--saffron)}
+/* Smriti */
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(6px,1.6vw,14px);max-width:640px;margin:10px auto 24px}
+.mc{aspect-ratio:3/4;perspective:700px;background:none;border:0;padding:0}
+.mc .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.mc.flip .in{transform:rotateY(180deg)}
+.mc .f,.mc .b{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:4px;text-align:center}
+.mc .b{background:radial-gradient(circle at 50% 50%,var(--saffron) 0 8%,transparent 9%),repeating-conic-gradient(from 0deg,var(--magenta) 0 15deg,var(--surface2) 15deg 30deg);border:2px solid var(--saffron)}
+.mc .f{transform:rotateY(180deg);background:var(--surface);border:2px solid var(--peacock);font-size:clamp(10px,2.4vw,14px);font-weight:700;line-height:1.2}
+.mc .f span{font-size:clamp(28px,8vw,52px);line-height:1}
+.mc.done .f{border-color:var(--saffron);background:color-mix(in srgb,var(--saffron) 20%,var(--surface));animation:pop .5s}
+@keyframes pop{50%{transform:rotateY(180deg) scale(1.12)}}
+/* Patang */
+.pt{position:relative;margin-block:10px 24px}
+.pt canvas{width:100%;height:min(66vh,480px);display:block;border-radius:16px;border:2px solid var(--saffron);touch-action:manipulation;cursor:crosshair}
+.ov{position:absolute;inset:0;display:grid;place-content:center;gap:12px;text-align:center;background:rgba(20,10,40,.55);border-radius:16px;color:#fff;padding:16px}
+.ov h3{margin:0;font-size:clamp(28px,6vw,46px)}
+.ov .btn{justify-self:center}
+.hud{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:8px;z-index:2;pointer-events:none;flex-wrap:wrap}
+.hud .stat{background:rgba(20,10,40,.6);color:#fff;border-color:rgba(255,255,255,.2)}
+/* Pallanguzhi */
+.pl{max-width:820px;margin:10px auto 24px;background:linear-gradient(180deg,#6b3b1e,#4a2610);border:3px solid var(--saffron);border-radius:22px;padding:clamp(10px,2.5vw,22px);box-shadow:var(--shadow)}
+.pl .row{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(7,minmax(0,1fr)) minmax(0,1.1fr);gap:clamp(4px,1.2vw,10px);align-items:stretch}
+.store,.pit{border-radius:999px;border:0;background:radial-gradient(circle at 50% 35%,#2a1206,#150802);box-shadow:inset 0 4px 10px rgba(0,0,0,.7);color:#ffe3b0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-variant-numeric:tabular-nums;position:relative;padding:4px}
+.pit{aspect-ratio:1;width:100%;min-width:0;overflow:hidden;transition:transform .15s,box-shadow .15s}
+.store{border-radius:40px;min-height:100px;font-size:clamp(18px,4vw,30px)}
+.pit.mine:not([disabled]):hover{transform:scale(1.07);box-shadow:inset 0 4px 10px rgba(0,0,0,.7),0 0 0 3px var(--saffron)}
+.pit.hl{box-shadow:inset 0 4px 10px rgba(0,0,0,.7),0 0 0 3px var(--peacock)}
+.pit[disabled]{cursor:default}
+.pit .n{font-size:clamp(11px,2.4vw,16px);opacity:.9}
+.dots{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;max-width:78%}
+.dots i{width:clamp(5px,1.1vw,9px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff9a8a,#c8301f)}
+.dots i:nth-child(3n){background:radial-gradient(circle at 35% 30%,#ffe27a,#d99a00)}
+.dots i:nth-child(3n+1){background:radial-gradient(circle at 35% 30%,#8af0e4,#0b8f84)}
+.pl .mid{display:grid;grid-template-columns:minmax(0,1.1fr) 7fr minmax(0,1.1fr);margin:clamp(4px,1.2vw,10px) 0}
+.pl .msg{grid-column:2;text-align:center;font-weight:700;color:#ffe3b0;min-height:1.6em}
+.lbl{font-size:12px;opacity:.75;font-weight:600}
+/* Quiz */
+.qz{max-width:680px;margin:10px auto 24px;display:flex;flex-direction:column;gap:14px}
+.qbar{height:8px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.qbar i{display:block;height:100%;background:linear-gradient(90deg,var(--saffron),var(--magenta));transition:width .4s}
+.qz h3{margin:0;font-size:clamp(22px,4.4vw,30px);line-height:1.3}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:14px 16px;font-weight:600;font-size:17px;transition:transform .12s,border-color .12s,background .2s}
+.opt:not([disabled]):hover{transform:translateX(4px);border-color:var(--saffron)}
+.opt.ok{background:color-mix(in srgb,var(--peacock) 35%,var(--surface));border-color:var(--peacock)}
+.opt.no{background:color-mix(in srgb,var(--vermilion) 30%,var(--surface));border-color:var(--vermilion);animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.res{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding-block:20px}
+.res .big{font-size:64px;line-height:1}
+.stars{font-size:40px;letter-spacing:6px;color:var(--saffron)}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+[hidden]{display:none!important}
+@media (max-width:760px){.mk{grid-template-columns:1fr}.hero .wrap{padding-block:36px 32px}.hero p{font-size:16px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head><body>
+<canvas id="fx"></canvas>
+<header class="top"><div class="wrap">
+  <button class="brand" id="home" aria-label="Khel Bharat">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="var(--magenta)"/><g fill="var(--saffron)"><ellipse cx="20" cy="9" rx="4" ry="7"/><ellipse cx="20" cy="31" rx="4" ry="7"/><ellipse cx="9" cy="20" rx="7" ry="4"/><ellipse cx="31" cy="20" rx="7" ry="4"/></g><circle cx="20" cy="20" r="5" fill="var(--peacock)"/></svg>
+    <b class="display" id="brandName">Khel Bharat</b>
+  </button>
+  <div class="langs" id="langs" role="group" aria-label="Language"></div>
+  <button class="icon-btn" id="mute" aria-label="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path id="snd" d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg></button>
+</div></header>
+
+<main id="hub">
+  <section class="hero">
+    <canvas id="mandala"></canvas>
+    <div class="wrap">
+      <h1 class="display" id="heroTitle"></h1>
+      <p id="heroSub"></p>
+      <div class="chips" id="chips"></div>
+    </div>
+  </section>
+  <div class="wrap">
+    <div class="grid" id="cards"></div>
+    <footer id="foot"></footer>
+  </div>
+</main>
+
+<main id="stage" hidden>
+  <div class="wrap">
+    <div class="stage-head">
+      <button class="btn ghost" id="back"></button>
+      <h2 class="display" id="stageTitle"></h2>
+      <div class="stats" id="stageStats"></div>
+    </div>
+    <div id="gameRoot"></div>
+  </div>
+</main>
+<script>
+const LANGS=[['en','English'],['hi','हिन्दी'],['ta','தமிழ்'],['bn','বাংলা'],['te','తెలుగు']];
+const T={
+en:{brand:'Khel Bharat',title:'Play the heritage of <em>Bharat</em>',sub:'Five games rooted in India’s history and culture, playable in five languages.',
+ play:'Play',back:'Back',again:'Play again',best:'Best',score:'Score',moves:'Moves',time:'Time',roll:'Roll the dice',you:'You',cpu:'Computer',
+ yourTurn:'Your turn',cpuTurn:'Computer’s turn',youWin:'You win!',cpuWins:'Computer wins',climb:'Ladder of',bite:'Snake of',
+ matchWin:'All pairs matched!',cut:'Tap the kites to cut them!',timeUp:'Time’s up!',kites:'Kites cut',pickPit:'Pick a pit on your side',
+ next:'Next',result:'Your score',points:'Heritage points',foot:'Student Innovation · Toys & Games · Smart India Hackathon 2026 · PS 26208',
+ g1:'Moksha Patam',d1:'Climb the ladders of virtue, dodge the snakes of vice.',g2:'Smriti',d2:'Match pairs of India’s great monuments.',
+ g3:'Patang',d3:'Fly into the sky and cut rival kites.',g4:'Pallanguzhi',d4:'A South Indian seed-sowing game, thousands of years old.',
+ g5:'Itihaas Quiz',d5:'Six questions on games, history and culture.',combo:'Combo',sound:'Sound',pit:'seeds'},
+hi:{brand:'खेल भारत',title:'<em>भारत</em> की विरासत खेलें',sub:'भारत के इतिहास और संस्कृति पर आधारित पाँच खेल, पाँच भाषाओं में।',
+ play:'खेलें',back:'वापस',again:'फिर खेलें',best:'सर्वश्रेष्ठ',score:'अंक',moves:'चालें',time:'समय',roll:'पासा फेंकें',you:'आप',cpu:'कंप्यूटर',
+ yourTurn:'आपकी बारी',cpuTurn:'कंप्यूटर की बारी',youWin:'आप जीत गए!',cpuWins:'कंप्यूटर जीता',climb:'सीढ़ी:',bite:'साँप:',
+ matchWin:'सब जोड़ियाँ मिल गईं!',cut:'पतंगों पर टैप करके काटें!',timeUp:'समय समाप्त!',kites:'कटी पतंगें',pickPit:'अपनी ओर का गड्ढा चुनें',
+ next:'अगला',result:'आपके अंक',points:'विरासत अंक',foot:'छात्र नवाचार · खिलौने और खेल · स्मार्ट इंडिया हैकथॉन 2026 · PS 26208',
+ g1:'मोक्ष पटम',d1:'सदगुणों की सीढ़ी चढ़ें, दुर्गुणों के साँपों से बचें।',g2:'स्मृति',d2:'भारत के महान स्मारकों की जोड़ियाँ मिलाएँ।',
+ g3:'पतंग',d3:'आसमान में पेच लड़ाएँ, पतंगें काटें।',g4:'पल्लांगुझी',d4:'दक्षिण भारत का हज़ारों साल पुराना बीज-बाँटने वाला खेल।',
+ g5:'इतिहास प्रश्नोत्तरी',d5:'खेलों, इतिहास और संस्कृति पर छह सवाल।',combo:'कॉम्बो',sound:'ध्वनि',pit:'बीज'},
+ta:{brand:'கேல் பாரத்',title:'<em>பாரத</em> மரபை விளையாடுங்கள்',sub:'இந்திய வரலாறு, பண்பாட்டை அடிப்படையாகக் கொண்ட ஐந்து விளையாட்டுகள், ஐந்து மொழிகளில்.',
+ play:'விளையாடு',back:'பின்செல்',again:'மீண்டும்',best:'சிறந்தது',score:'மதிப்பெண்',moves:'நகர்வுகள்',time:'நேரம்',roll:'பகடை உருட்டு',you:'நீங்கள்',cpu:'கணினி',
+ yourTurn:'உங்கள் முறை',cpuTurn:'கணினி முறை',youWin:'நீங்கள் வென்றீர்கள்!',cpuWins:'கணினி வென்றது',climb:'ஏணி:',bite:'பாம்பு:',
+ matchWin:'அனைத்தும் பொருந்தின!',cut:'பட்டங்களைத் தொட்டு அறுக்கவும்!',timeUp:'நேரம் முடிந்தது!',kites:'அறுத்த பட்டங்கள்',pickPit:'உங்கள் பக்கக் குழியைத் தேர்ந்தெடுங்கள்',
+ next:'அடுத்து',result:'உங்கள் மதிப்பெண்',points:'மரபு புள்ளிகள்',foot:'மாணவர் புத்தாக்கம் · பொம்மைகளும் விளையாட்டுகளும் · ஸ்மார்ட் இந்தியா ஹேக்கத்தான் 2026 · PS 26208',
+ g1:'மோட்ச படம்',d1:'நற்பண்பு ஏணிகளில் ஏறுங்கள், தீய பாம்புகளைத் தவிருங்கள்.',g2:'நினைவு',d2:'இந்தியாவின் பெருஞ்சின்னங்களின் ஜோடிகளைப் பொருத்துங்கள்.',
+ g3:'பட்டம்',d3:'வானில் பறந்து எதிரி பட்டங்களை அறுங்கள்.',g4:'பல்லாங்குழி',d4:'ஆயிரம் ஆண்டுகள் பழமையான தென்னிந்திய விதை விளையாட்டு.',
+ g5:'வரலாற்று வினாடி வினா',d5:'விளையாட்டுகள், வரலாறு, பண்பாடு பற்றிய ஆறு கேள்விகள்.',combo:'காம்போ',sound:'ஒலி',pit:'விதைகள்'},
+bn:{brand:'খেল ভারত',title:'<em>ভারতের</em> ঐতিহ্য খেলুন',sub:'ভারতের ইতিহাস ও সংস্কৃতি নিয়ে পাঁচটি খেলা, পাঁচ ভাষায়।',
+ play:'খেলুন',back:'ফিরুন',again:'আবার',best:'সেরা',score:'স্কোর',moves:'চাল',time:'সময়',roll:'ছক্কা ফেলুন',you:'আপনি',cpu:'কম্পিউটার',
+ yourTurn:'আপনার পালা',cpuTurn:'কম্পিউটারের পালা',youWin:'আপনি জিতেছেন!',cpuWins:'কম্পিউটার জিতেছে',climb:'মই:',bite:'সাপ:',
+ matchWin:'সব জোড়া মিলেছে!',cut:'ঘুড়িতে ট্যাপ করে কাটুন!',timeUp:'সময় শেষ!',kites:'কাটা ঘুড়ি',pickPit:'আপনার দিকের গর্ত বেছে নিন',
+ next:'পরবর্তী',result:'আপনার স্কোর',points:'ঐতিহ্য পয়েন্ট',foot:'ছাত্র উদ্ভাবন · খেলনা ও খেলা · স্মার্ট ইন্ডিয়া হ্যাকাথন ২০২৬ · PS 26208',
+ g1:'মোক্ষ পটম',d1:'সদগুণের মই বেয়ে উঠুন, কুগুণের সাপ এড়ান।',g2:'স্মৃতি',d2:'ভারতের মহান স্থাপত্যের জোড়া মেলান।',
+ g3:'ঘুড়ি',d3:'আকাশে প্যাঁচ লড়ান, ঘুড়ি কাটুন।',g4:'পাল্লাংকুঝি',d4:'দক্ষিণ ভারতের হাজার বছরের পুরনো বীজ-বিলির খেলা।',
+ g5:'ইতিহাস কুইজ',d5:'খেলা, ইতিহাস ও সংস্কৃতি নিয়ে ছয়টি প্রশ্ন।',combo:'কম্বো',sound:'শব্দ',pit:'বীজ'},
+te:{brand:'ఖేల్ భారత్',title:'<em>భారత</em> వారసత్వాన్ని ఆడండి',sub:'భారత చరిత్ర, సంస్కృతి ఆధారంగా ఐదు ఆటలు, ఐదు భాషల్లో.',
+ play:'ఆడండి',back:'వెనుకకు',again:'మళ్లీ',best:'ఉత్తమం',score:'స్కోర్',moves:'ఎత్తులు',time:'సమయం',roll:'పాచిక వేయండి',you:'మీరు',cpu:'కంప్యూటర్',
+ yourTurn:'మీ వంతు',cpuTurn:'కంప్యూటర్ వంతు',youWin:'మీరు గెలిచారు!',cpuWins:'కంప్యూటర్ గెలిచింది',climb:'నిచ్చెన:',bite:'పాము:',
+ matchWin:'అన్ని జతలు కలిశాయి!',cut:'గాలిపటాలను తాకి కత్తిరించండి!',timeUp:'సమయం ముగిసింది!',kites:'కత్తిరించినవి',pickPit:'మీ వైపు గుంటను ఎంచుకోండి',
+ next:'తదుపరి',result:'మీ స్కోర్',points:'వారసత్వ పాయింట్లు',foot:'విద్యార్థి ఆవిష్కరణ · బొమ్మలు & ఆటలు · స్మార్ట్ ఇండియా హ్యాకథాన్ 2026 · PS 26208',
+ g1:'మోక్ష పటం',d1:'సద్గుణాల నిచ్చెనలు ఎక్కండి, దుర్గుణాల పాములను తప్పించుకోండి.',g2:'స్మృతి',d2:'భారత గొప్ప కట్టడాల జతలను కలపండి.',
+ g3:'గాలిపటం',d3:'ఆకాశంలో ఎగిరి పోటీ పటాలను కత్తిరించండి.',g4:'పల్లాంగుళి',d4:'వేల ఏళ్ల నాటి దక్షిణ భారత గింజల ఆట.',
+ g5:'చరిత్ర క్విజ్',d5:'ఆటలు, చరిత్ర, సంస్కృతిపై ఆరు ప్రశ్నలు.',combo:'కాంబో',sound:'ధ్వని',pit:'గింజలు'}
+};
+const VIRT={en:['Truth','Kindness','Knowledge','Courage','Patience','Devotion','Generosity'],
+ hi:['सत्य','दया','ज्ञान','साहस','धैर्य','भक्ति','दान'],ta:['உண்மை','இரக்கம்','அறிவு','துணிவு','பொறுமை','பக்தி','ஈகை'],
+ bn:['সত্য','দয়া','জ্ঞান','সাহস','ধৈর্য','ভক্তি','দান'],te:['సత్యం','దయ','జ్ఞానం','ధైర్యం','ఓర్పు','భక్తి','దానం']};
+const VICE={en:['Anger','Greed','Pride','Lies','Laziness','Envy','Cruelty','Deceit'],
+ hi:['क्रोध','लोभ','अभिमान','झूठ','आलस्य','ईर्ष्या','क्रूरता','छल'],ta:['கோபம்','பேராசை','செருக்கு','பொய்','சோம்பல்','பொறாமை','கொடுமை','வஞ்சகம்'],
+ bn:['ক্রোধ','লোভ','অহংকার','মিথ্যা','আলস্য','ঈর্ষা','নিষ্ঠুরতা','ছল'],te:['కోపం','లోభం','అహంకారం','అబద్ధం','సోమరితనం','అసూయ','క్రూరత్వం','మోసం']};
+const MON=[['🕌','🏯','☀️','🗿','🕋','🛕','☸️','⛩️'],{
+ en:['Taj Mahal','Red Fort','Konark Sun Temple','Hampi','Charminar','Meenakshi Temple','Sanchi Stupa','Gateway of India'],
+ hi:['ताज महल','लाल क़िला','कोणार्क सूर्य मंदिर','हम्पी','चारमीनार','मीनाक्षी मंदिर','साँची स्तूप','गेटवे ऑफ़ इंडिया'],
+ ta:['தாஜ் மஹால்','செங்கோட்டை','கொனார்க் சூரியன் கோயில்','ஹம்பி','சார்மினார்','மீனாட்சி கோயில்','சாஞ்சி ஸ்தூபி','இந்தியா வாயில்'],
+ bn:['তাজমহল','লাল কেল্লা','কোনার্ক সূর্য মন্দির','হাম্পি','চারমিনার','মীনাক্ষী মন্দির','সাঁচী স্তূপ','গেটওয়ে অফ ইন্ডিয়া'],
+ te:['తాజ్ మహల్','ఎర్రకోట','కోణార్క్ సూర్య దేవాలయం','హంపి','చార్మినార్','మీనాక్షి ఆలయం','సాంచి స్థూపం','గేట్‌వే ఆఫ్ ఇండియా']}];
+// Quiz: q = question per language, o = options per language (answer is always o[..][0], options are shuffled at play time)
+const MN=MON[1], pick=(l,a)=>a.map(i=>MN[l][i]);
+const QZ=[
+ {q:{en:'Which ancient Indian game is the ancestor of chess?',hi:'शतरंज का प्राचीन भारतीय रूप कौन-सा खेल है?',ta:'சதுரங்க ஆட்டத்தின் பண்டைய இந்திய வடிவம் எது?',bn:'দাবার প্রাচীন ভারতীয় রূপ কোনটি?',te:'చదరంగానికి ప్రాచీన భారతీయ రూపం ఏది?'},
+  o:{en:['Chaturanga','Pachisi','Kabaddi','Carrom'],hi:['चतुरंग','पचीसी','कबड्डी','कैरम'],ta:['சதுரங்கம்','பச்சீசி','கபடி','கேரம்'],bn:['চতুরঙ্গ','পচিসি','কবাডি','ক্যারাম'],te:['చతురంగం','పచ్చీసి','కబడ్డీ','క్యారమ్']}},
+ {q:{en:'What was Snakes and Ladders originally called?',hi:'साँप-सीढ़ी का मूल नाम क्या था?',ta:'பாம்பு ஏணி ஆட்டத்தின் மூலப் பெயர் என்ன?',bn:'সাপ-লুডুর আদি নাম কী ছিল?',te:'పాము-నిచ్చెన ఆట అసలు పేరు ఏమిటి?'},
+  o:{en:['Moksha Patam','Pallanguzhi','Gilli Danda','Kho Kho'],hi:['मोक्ष पटम','पल्लांगुझी','गिल्ली डंडा','खो-खो'],ta:['மோட்ச படம்','பல்லாங்குழி','கில்லி தாண்டு','கோ-கோ'],bn:['মোক্ষ পটম','পাল্লাংকুঝি','গুলি ডান্ডা','খো-খো'],te:['మోక్ష పటం','పల్లాంగుళి','గిల్లీ దండా','ఖో-ఖో']}},
+ {q:{en:'Which temple is built as a giant stone chariot of the Sun god?',hi:'सूर्य देव के पत्थर के रथ जैसा मंदिर कौन-सा है?',ta:'சூரிய தேவனின் கல் தேர் வடிவில் கட்டப்பட்ட கோயில் எது?',bn:'সূর্যদেবের পাথরের রথের আকারে তৈরি মন্দির কোনটি?',te:'సూర్యదేవుని రాతి రథం ఆకారంలో నిర్మించిన ఆలయం ఏది?'},
+  o:Object.fromEntries(['en','hi','ta','bn','te'].map(l=>[l,pick(l,[2,4,6,7])]))},
+ {q:{en:'Pallanguzhi, a seed-sowing board game, comes from which region?',hi:'पल्लांगुझी किस क्षेत्र का पारंपरिक खेल है?',ta:'பல்லாங்குழி எந்தப் பகுதியின் பாரம்பரிய விளையாட்டு?',bn:'পাল্লাংকুঝি কোন অঞ্চলের ঐতিহ্যবাহী খেলা?',te:'పల్లాంగుళి ఏ ప్రాంతపు సంప్రదాయ ఆట?'},
+  o:{en:['South India','Punjab','Assam','Gujarat'],hi:['दक्षिण भारत','पंजाब','असम','गुजरात'],ta:['தென்னிந்தியா','பஞ்சாப்','அசாம்','குஜராத்'],bn:['দক্ষিণ ভারত','পাঞ্জাব','আসাম','গুজরাট'],te:['దక్షిణ భారతదేశం','పంజాబ్','అస్సాం','గుజరాత్']}},
+ {q:{en:'What fills the sky on Makar Sankranti?',hi:'मकर संक्रांति पर आसमान में क्या उड़ाया जाता है?',ta:'மகர சங்கராந்தியில் வானில் எதைப் பறக்கவிடுவார்கள்?',bn:'মকর সংক্রান্তিতে আকাশে কী ওড়ানো হয়?',te:'మకర సంక్రాంతికి ఆకాశంలో ఏమి ఎగురవేస్తారు?'},
+  o:{en:['Kites','Lanterns','Balloons','Boats'],hi:['पतंग','लालटेन','गुब्बारे','नावें'],ta:['பட்டம்','விளக்குகள்','பலூன்கள்','படகுகள்'],bn:['ঘুড়ি','লণ্ঠন','বেলুন','নৌকা'],te:['గాలిపటాలు','లాంతర్లు','బుడగలు','పడవలు']}},
+ {q:{en:'Which dice game decided the fate of the Pandavas in the Mahabharata?',hi:'महाभारत में पांडवों का भाग्य किस खेल से तय हुआ?',ta:'மகாபாரதத்தில் பாண்டவர்களின் தலைவிதியை எந்த ஆட்டம் தீர்மானித்தது?',bn:'মহাভারতে পাণ্ডবদের ভাগ্য কোন খেলায় নির্ধারিত হয়?',te:'మహాభారతంలో పాండవుల భవిష్యత్తును ఏ ఆట నిర్ణయించింది?'},
+  o:{en:['Chausar','Pallanguzhi','Kabaddi','Gilli Danda'],hi:['चौसर','पल्लांगुझी','कबड्डी','गिल्ली डंडा'],ta:['சொக்கட்டான்','பல்லாங்குழி','கபடி','கில்லி தாண்டு'],bn:['পাশা','পাল্লাংকুঝি','কবাডি','গুলি ডান্ডা'],te:['పాచికల ఆట','పల్లాంగుళి','కబడ్డీ','గిల్లీ దండా']}}
+];
+const $=(s,r=document)=>r.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem('kb_'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('kb_'+k,JSON.stringify(v))}catch(e){}}};
+const guess=(navigator.language||'en').slice(0,2);
+let lang=store.get('lang',T[guess]?guess:'en');
+const t=k=>(T[lang]&&T[lang][k])??T.en[k];
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const dpr=()=>Math.min(window.devicePixelRatio||1,2);
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* sound */
+let AC=null,muted=store.get('mute',false);
+function beep(f=440,d=.12,type='sine',v=.05,delay=0){
+  if(muted)return;
+  try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();
+    const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+delay;
+    o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,s);g.gain.exponentialRampToValueAtTime(.0001,s+d);
+    o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d)}catch(e){}}
+const sfx={tap:()=>beep(520,.06,'triangle'),good:()=>{beep(660,.1,'triangle');beep(880,.14,'triangle',.05,.09)},
+  bad:()=>beep(180,.25,'sawtooth',.04),win:()=>[523,659,784,1046].forEach((f,i)=>beep(f,.18,'triangle',.06,i*.1)),
+  step:()=>beep(300+Math.random()*60,.05,'square',.02),cut:()=>beep(900,.08,'square',.03)};
+
+/* confetti */
+const fx=$('#fx'),fctx=fx.getContext('2d');let parts=[],fxOn=false;
+function sizeFx(){const d=dpr();fx.width=innerWidth*d;fx.height=innerHeight*d;fctx.setTransform(d,0,0,d,0,0)}
+sizeFx();addEventListener('resize',sizeFx);
+function burst(x=innerWidth/2,y=innerHeight/3,n=90){
+  if(reduce)return;
+  const cols=[css('--saffron'),css('--magenta'),css('--peacock'),css('--vermilion'),'#fff'];
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=3+Math.random()*9;
+    parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-4,w:5+Math.random()*6,h:3+Math.random()*4,c:cols[i%cols.length],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:1})}
+  if(!fxOn){fxOn=true;requestAnimationFrame(fxLoop)}}
+function fxLoop(){
+  fctx.clearRect(0,0,innerWidth,innerHeight);
+  parts=parts.filter(p=>p.life>0&&p.y<innerHeight+20);
+  for(const p of parts){p.x+=p.vx;p.y+=p.vy;p.vy+=.22;p.vx*=.99;p.r+=p.vr;p.life-=.008;
+    fctx.save();fctx.globalAlpha=Math.max(p.life,0);fctx.translate(p.x,p.y);fctx.rotate(p.r);fctx.fillStyle=p.c;fctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);fctx.restore()}
+  if(parts.length)requestAnimationFrame(fxLoop);else{fxOn=false;fctx.clearRect(0,0,innerWidth,innerHeight)}}
+
+/* hero mandala (rangoli) */
+(function(){
+  const c=$('#mandala'),x=c.getContext('2d');let w=0,h=0,px=-1,py=-1,tm=0,rip=[],cols=[],fr=0;
+  function rs(){const r=c.getBoundingClientRect(),d=dpr();w=r.width;h=r.height;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);draw()}
+  function draw(){
+    if(!w)return;if(fr++%60===0)cols=[css('--saffron'),css('--magenta'),css('--peacock'),css('--vermilion')];
+    x.clearRect(0,0,w,h);
+    const cx=w>760?w*.76:w*.5,cy=h*.5,s=Math.min(h*.62,w*.46,330),tilt=px<0?0:(px-cx)*.0006;
+    for(let L=0;L<6;L++){
+      const n=6+L*3,R=s*(.12+L*.17),pl=s*.19,dir=L%2?1:-1,col=cols[L%4];
+      for(let k=0;k<n;k++){
+        const a=k/n*Math.PI*2+tm*dir*(.12+L*.02)+tilt*(L+1);
+        x.save();x.translate(cx+Math.cos(a)*R,cy+Math.sin(a)*R);x.rotate(a);
+        x.beginPath();x.ellipse(0,0,pl,pl*.36,0,0,Math.PI*2);x.globalAlpha=.3;x.fillStyle=col;x.fill();
+        x.globalAlpha=.75;x.lineWidth=1.4;x.strokeStyle=col;x.stroke();x.restore()}
+      x.beginPath();x.arc(cx,cy,R,0,Math.PI*2);x.globalAlpha=.18;x.strokeStyle=col;x.lineWidth=1;x.stroke()}
+    x.globalAlpha=1;x.beginPath();x.arc(cx,cy,s*.07,0,Math.PI*2);x.fillStyle=cols[0];x.fill();
+    for(const r of rip){x.beginPath();x.arc(r.x,r.y,r.r,0,Math.PI*2);x.globalAlpha=Math.max(0,1-r.r/220);x.strokeStyle=cols[2];x.lineWidth=2.5;x.stroke()}
+    x.globalAlpha=1}
+  function loop(){tm+=.012;rip.forEach(r=>r.r+=3);rip=rip.filter(r=>r.r<220);
+    if(!$('#hub').hidden&&!document.hidden)draw();requestAnimationFrame(loop)}
+  const hero=c.parentElement;
+  hero.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();px=e.clientX-r.left;py=e.clientY-r.top});
+  hero.addEventListener('pointerdown',e=>{const r=c.getBoundingClientRect();rip.push({x:e.clientX-r.left,y:e.clientY-r.top,r:6});beep(400+Math.random()*300,.15,'sine',.03)});
+  hero.addEventListener('pointerleave',()=>{px=-1});
+  addEventListener('resize',rs);new ResizeObserver(rs).observe(hero);rs();
+  if(!reduce)requestAnimationFrame(loop);
+  window.redrawMandala=()=>{fr=0;draw()};
+})();
+
+/* ---------- app shell ---------- */
+const G={};let cur=null;
+const ICONS={
+ g1:'<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M22 90 42 14M44 90 64 14M28 66h22M32 44h22M36 24h22"/><path d="M70 90c-20-14 22-24 0-40s18-20 12-36" stroke-width="7" opacity=".85"/><circle cx="82" cy="14" r="5" fill="currentColor"/></svg>',
+ g2:'<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"><rect x="8" y="22" width="44" height="60" rx="8" transform="rotate(-10 30 52)"/><rect x="48" y="18" width="44" height="60" rx="8" transform="rotate(8 70 48)" fill="rgba(255,255,255,.22)"/><path d="M58 60v-14l12-8 12 8v14M66 60v-8h8v8" stroke-width="4"/></svg>',
+ g3:'<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M50 8 78 42 50 78 22 42z" fill="rgba(255,255,255,.25)"/><path d="M50 8v70M22 42h56"/><path d="M50 78c-14 6 14 10 0 16m0 0c-8 4 6 6-2 8" stroke-width="4"/></svg>',
+ g4:'<svg viewBox="0 0 100 100" fill="currentColor"><g opacity=".9"><circle cx="16" cy="34" r="9"/><circle cx="38" cy="34" r="9"/><circle cx="60" cy="34" r="9"/><circle cx="82" cy="34" r="9"/><circle cx="16" cy="66" r="9"/><circle cx="38" cy="66" r="9"/><circle cx="60" cy="66" r="9"/><circle cx="82" cy="66" r="9"/></g><g fill="#ffd166"><circle cx="38" cy="34" r="3.5"/><circle cx="60" cy="66" r="3.5"/><circle cx="62" cy="63" r="3.5"/><circle cx="16" cy="66" r="3.5"/></g></svg>',
+ g5:'<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"><path d="M32 34c0-12 10-18 20-18s18 7 18 17c0 16-18 15-18 30"/><circle cx="52" cy="84" r="2" stroke-width="9"/></svg>'};
+const GAMES=['moksha','smriti','patang','pallan','quiz'];
+const best=(id)=>store.get('best_'+id,null);
+function points(){return GAMES.reduce((s,id)=>s+(store.get('pts_'+id,0)),0)}
+function addPts(id,p){if(p>store.get('pts_'+id,0))store.set('pts_'+id,p);renderHub()}
+function renderHub(){
+  $('#brandName').textContent=t('brand');
+  $('#heroTitle').innerHTML=t('title');$('#heroSub').textContent=t('sub');
+  $('#chips').innerHTML=`<span class="chip"><b>${points()}</b> ${t('points')}</span>`+LANGS.map(l=>`<span class="chip">${l[1]}</span>`).join('');
+  $('#cards').innerHTML=GAMES.map((id,i)=>`<button class="card" data-g="${id}"><div class="art a${i+1}">${ICONS['g'+(i+1)]}</div>
+    <div class="body"><h3 class="display">${t('g'+(i+1))}</h3><p>${t('d'+(i+1))}</p>
+    <div class="foot"><span>${best(id)!=null?t('best')+': <b>'+best(id)+'</b>':''}</span><span class="go">${t('play')}</span></div></div></button>`).join('');
+  $('#foot').textContent=t('foot');
+  document.documentElement.lang=lang;
+  $('#langs').innerHTML=LANGS.map(l=>`<button data-l="${l[0]}" aria-pressed="${l[0]===lang}">${l[1]}</button>`).join('');
+  $('#mute').setAttribute('aria-label',t('sound'));$('#snd').style.display=muted?'none':'';
+  if(cur){$('#back').textContent='← '+t('back');$('#stageTitle').textContent=t('g'+(GAMES.indexOf(cur)+1))}
+}
+function openGame(id){
+  if(cur)G[cur].unmount();
+  cur=id;$('#hub').hidden=!!id;$('#stage').hidden=!id;scrollTo(0,0);
+  if(id){const r=$('#gameRoot');r.innerHTML='';$('#stageStats').innerHTML='';G[id].mount(r);renderHub()}
+  else renderHub();
+}
+$('#cards').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b){sfx.tap();openGame(b.dataset.g)}});
+$('#back').onclick=()=>{sfx.tap();openGame(null)};
+$('#home').onclick=()=>openGame(null);
+$('#langs').addEventListener('click',e=>{const b=e.target.closest('[data-l]');if(!b)return;lang=b.dataset.l;store.set('lang',lang);sfx.tap();renderHub();if(cur)G[cur].refresh();redrawMandala()});
+$('#mute').onclick=()=>{muted=!muted;store.set('mute',muted);renderHub();if(!muted)sfx.tap()};
+const stat=(id,label,val)=>{let e=$('#st_'+id);if(!e){e=document.createElement('span');e.id='st_'+id;e.className='stat';$('#stageStats').appendChild(e)}e.innerHTML=label+': <b>'+val+'</b>'};
+/* ============ 1. MOKSHA PATAM (snakes & ladders of virtue and vice) ============ */
+G.moksha=(()=>{
+  const LAD={4:25,13:46,33:49,42:63,50:69,62:81,74:92},SNK={27:5,40:3,43:18,54:31,66:45,76:58,89:53,99:41};
+  const LK=Object.keys(LAD).map(Number),SK=Object.keys(SNK).map(Number);
+  const rc=n=>{const r=Math.floor((n-1)/10),i=(n-1)%10;return[r,r%2===0?i:9-i]};
+  const xy=n=>{const[r,c]=rc(n);return[c*10+5,(9-r)*10+5]};
+  const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+  let S,root,dead;
+  const dieHTML=n=>Array.from({length:9},(_,i)=>`<i class="${n&&PIPS[n].includes(i)?'on':''}"></i>`).join('');
+  function svg(){
+    let o='';
+    LK.forEach(a=>{const[x1,y1]=xy(a),[x2,y2]=xy(LAD[a]),dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),nx=-dy/L*1.5,ny=dx/L*1.5;
+      o+=`<g stroke="#19c2b2" stroke-width=".9" stroke-linecap="round"><line x1="${x1+nx}" y1="${y1+ny}" x2="${x2+nx}" y2="${y2+ny}"/><line x1="${x1-nx}" y1="${y1-ny}" x2="${x2-nx}" y2="${y2-ny}"/>`;
+      for(let k=1;k<L/4.5;k++){const f=k*4.5/L;o+=`<line x1="${x1+nx+dx*f}" y1="${y1+ny+dy*f}" x2="${x1-nx+dx*f}" y2="${y1-ny+dy*f}" stroke-width=".7"/>`}o+='</g>'});
+    SK.forEach((a,i)=>{const[x1,y1]=xy(a),[x2,y2]=xy(SNK[a]),dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),nx=-dy/L,ny=dx/L,N=44,amp=2.2,pts=[];
+      for(let k=0;k<=N;k++){const f=k/N,w=Math.sin(f*Math.PI*5)*amp*(1-f*.6);pts.push((x1+dx*f+nx*w).toFixed(1)+','+(y1+dy*f+ny*w).toFixed(1))}
+      const col=['#ff4d3d','#e6399b','#ff8a3d','#c0392b'][i%4];
+      o+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${col}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" opacity=".92"/><circle cx="${x1}" cy="${y1}" r="1.7" fill="${col}"/><circle cx="${x1-.5}" cy="${y1-.4}" r=".3" fill="#fff"/><circle cx="${x1+.5}" cy="${y1-.4}" r=".3" fill="#fff"/>`});
+    return o}
+  function cells(){let h='';for(let r=9;r>=0;r--)for(let c=0;c<10;c++){const n=r*10+(r%2===0?c+1:10-c);
+      h+=`<div class="cell ${(r+c)%2?'alt':''} ${LAD[n]?'up':''} ${SNK[n]?'dn':''} ${n===100?'end':''}">${n}</div>`}return h}
+  function mount(r){
+    root=r;dead=false;S={p:[0,0],turn:0,busy:false,over:false,log:[],die:0,rolling:false};
+    r.innerHTML=`<div class="mk"><div class="board"><div class="cells">${cells()}</div><svg viewBox="0 0 100 100" preserveAspectRatio="none">${svg()}</svg>
+      <div class="pawn p0" id="pw0"></div><div class="pawn p1" id="pw1"></div></div>
+      <aside class="side"><div class="die" id="die"></div><button class="btn big" id="roll"></button><div class="turn" id="turn"></div><div class="log" id="log"></div></aside></div>`;
+    $('#roll').onclick=()=>play(0);refresh();pawns()}
+  function pawns(){for(let i=0;i<2;i++){const n=S.p[i],[x,y]=n?xy(n):[-5,95];const e=$('#pw'+i);if(!e)return;e.style.left=(x+(i?1.6:-1.6))+'%';e.style.top=(y+(i?1.6:-1.6))+'%'}}
+  function refresh(){
+    if(!root)return;$('#roll').textContent=t('roll');
+    const tn=$('#turn');tn.className='turn '+(S.over?'':S.turn?'cpu':'you');
+    tn.textContent=S.over?(S.p[0]===100?t('youWin'):t('cpuWins')):(S.turn?t('cpuTurn'):t('yourTurn'));
+    $('#roll').disabled=S.busy||S.over||S.turn!==0;
+    $('#die').className='die'+(S.rolling?' roll':'');$('#die').innerHTML=dieHTML(S.die);
+    $('#log').innerHTML=S.log.slice(-4).reverse().map(e=>{const who=e.w?t('cpu'):t('you');
+      const msg=e.k==='up'?`${t('climb')} ${VIRT[lang][e.i]}`:e.k==='dn'?`${t('bite')} ${VICE[lang][e.i]}`:'';
+      return `<div class="${e.k} ${e.w?'':'you'}"><b>${who}</b> · ${msg} (${e.a}→${e.b})</div>`}).join('');
+    stat('p',t('you'),S.p[0]);stat('c',t('cpu'),S.p[1])}
+  async function play(w){
+    if(S.busy||S.over||S.turn!==w)return;S.busy=true;S.rolling=true;refresh();
+    for(let i=0;i<7;i++){S.die=1+Math.random()*6|0;$('#die').innerHTML=dieHTML(S.die);beep(200+i*40,.05,'square',.02);await sleep(70);if(dead)return}
+    const d=1+Math.random()*6|0;S.die=d;S.rolling=false;refresh();await sleep(250);if(dead)return;
+    if(S.p[w]+d<=100){
+      for(let i=0;i<d;i++){S.p[w]++;pawns();stat(w?'c':'p',w?t('cpu'):t('you'),S.p[w]);sfx.step();await sleep(170);if(dead)return}
+      const n=S.p[w];
+      if(LAD[n]||SNK[n]){await sleep(260);const to=LAD[n]||SNK[n],up=!!LAD[n];
+        S.log.push({k:up?'up':'dn',i:up?LK.indexOf(n):SK.indexOf(n),a:n,b:to,w});S.p[w]=to;up?sfx.good():sfx.bad();pawns();await sleep(450);if(dead)return}
+    }
+    if(S.p[w]===100){S.over=true;S.busy=false;refresh();sfx.win();burst();
+      if(w===0){const sc=Math.max(10,100-S.log.length*3);if(best('moksha')==null||sc>best('moksha'))store.set('best_moksha',sc);addPts('moksha',sc)}return}
+    S.busy=false;if(d!==6)S.turn=1-w;refresh();
+    if(S.turn===1){await sleep(650);if(!dead)play(1)}}
+  function unmount(){dead=true;root=null}
+  return{mount,refresh,unmount}
+})();
+
+/* ============ 2. SMRITI (heritage memory match) ============ */
+G.smriti=(()=>{
+  let S,root,timer;
+  function mount(r){
+    root=r;const ids=shuffle([...MON[0].keys(),...MON[0].keys()]);
+    S={c:ids.map(id=>({id,f:false,m:false})),a:-1,lock:false,moves:0,found:0,t:0,started:false,over:false};
+    r.innerHTML=`<div class="mem">${S.c.map((c,i)=>`<button class="mc" data-i="${i}"><div class="in"><div class="b"></div><div class="f"><span>${MON[0][c.id]}</span><em class="nm" style="font-style:normal"></em></div></div></button>`).join('')}</div><div class="res" id="smWin" hidden></div>`;
+    r.querySelector('.mem').addEventListener('click',e=>{const b=e.target.closest('.mc');if(b)flip(+b.dataset.i)});refresh()}
+  function refresh(){
+    if(!root)return;root.querySelectorAll('.mc').forEach((b,i)=>{const c=S.c[i];b.classList.toggle('flip',c.f||c.m);b.classList.toggle('done',c.m);b.querySelector('.nm').textContent=MON[1][lang][c.id]});
+    stat('m',t('moves'),S.moves);stat('t',t('time'),S.t+'s');const bv=best('smriti');if(bv!=null)stat('b',t('best'),bv);
+    const w=$('#smWin');if(S.over){w.hidden=false;w.innerHTML=`<div class="big">🎉</div><h3 class="display">${t('matchWin')}</h3><button class="btn" id="smAgain">${t('again')}</button>`;$('#smAgain').onclick=()=>{clearInterval(timer);mount(root)}}}
+  async function flip(i){
+    const c=S.c[i];if(S.lock||c.f||c.m||S.over)return;
+    if(!S.started){S.started=true;timer=setInterval(()=>{S.t++;stat('t',t('time'),S.t+'s')},1000)}
+    c.f=true;sfx.tap();refresh();
+    if(S.a<0){S.a=i;return}
+    const o=S.c[S.a];S.moves++;S.lock=true;
+    if(o.id===c.id){o.m=c.m=true;o.f=c.f=false;S.found++;S.a=-1;S.lock=false;sfx.good();
+      if(S.found===8){S.over=true;clearInterval(timer);sfx.win();burst();const sc=Math.max(10,100-(S.moves-8)*5-Math.floor(S.t/6));
+        const bv=best('smriti');if(bv==null||S.moves<bv)store.set('best_smriti',S.moves);addPts('smriti',sc)}
+      refresh()}
+    else{refresh();await sleep(900);if(!root)return;o.f=c.f=false;S.a=-1;S.lock=false;sfx.bad();refresh()}}
+  function unmount(){clearInterval(timer);root=null}
+  return{mount,refresh,unmount}
+})();
+
+/* ============ 3. PATANG (kite-cutting arcade) ============ */
+G.patang=(()=>{
+  let lastSec,root,cv,x,W,H,raf,kites,bits,state,score,time,combo,lastHit,spawnT,prev,onRes;
+  const COL=['#ff4d3d','#ffa11f','#19c2b2','#e6399b','#7c5cff','#ffd166'];
+  function mount(r){
+    root=r;r.innerHTML=`<div class="pt"><canvas id="ptC"></canvas><div class="hud" id="hud"></div><div class="ov" id="ov"></div></div>`;
+    cv=$('#ptC');x=cv.getContext('2d');state='idle';score=0;time=30;combo=0;kites=[];bits=[];spawnT=0;lastHit=0;prev=performance.now();
+    onRes=()=>{const rc=cv.getBoundingClientRect(),d=dpr();W=rc.width;H=rc.height;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0)};
+    onRes();addEventListener('resize',onRes);cv.addEventListener('pointerdown',hit);
+    raf=requestAnimationFrame(loop);refresh()}
+  function refresh(){
+    if(!root)return;const hv=best('patang');
+    $('#hud').innerHTML=`<span class="stat">${t('score')}: <b>${score}</b></span><span class="stat">${t('time')}: <b>${Math.ceil(time)}</b></span>${combo>1?`<span class="stat">${t('combo')} <b>×${1+Math.floor(combo/3)}</b></span>`:''}${hv!=null?`<span class="stat">${t('best')}: <b>${hv}</b></span>`:''}`;
+    const ov=$('#ov');ov.hidden=state==='run';
+    if(state==='idle')ov.innerHTML=`<h3 class="display">${t('g3')}</h3><p>${t('cut')}</p><button class="btn" id="ptGo">${t('play')}</button>`;
+    if(state==='over')ov.innerHTML=`<h3 class="display">${t('timeUp')}</h3><p>${t('kites')}: <b>${score}</b></p><button class="btn" id="ptGo">${t('again')}</button>`;
+    const g=$('#ptGo');if(g)g.onclick=start}
+  function start(){state='run';score=0;time=30;combo=0;kites=[];bits=[];sfx.good();refresh()}
+  function spawn(){
+    const left=Math.random()<.5,s=24+Math.random()*18,gold=Math.random()<.13;
+    kites.push({x:left?-40:W+40,y:H*.12+Math.random()*H*.62,vx:(left?1:-1)*(45+Math.random()*75+(30-time)*1.5),ph:Math.random()*6,amp:18+Math.random()*30,s:gold?s*.85:s,c:gold?'#ffd166':COL[Math.random()*COL.length|0],gold,cut:false,rot:0,vy:0,age:0,y0:0})}
+  function hit(e){
+    if(state!=='run')return;const rc=cv.getBoundingClientRect(),px=e.clientX-rc.left,py=e.clientY-rc.top;
+    for(let i=kites.length-1;i>=0;i--){const k=kites[i];if(k.cut)continue;
+      if(Math.hypot(px-k.x,py-k.y)<k.s*1.5){k.cut=true;k.vy=-80;const now=performance.now();combo=now-lastHit<1400?combo+1:1;lastHit=now;
+        const p=(k.gold?3:1)*(1+Math.floor(combo/3));score+=p;sfx.cut();if(combo%3===0)sfx.good();
+        for(let j=0;j<12;j++)bits.push({x:k.x,y:k.y,vx:(Math.random()-.5)*260,vy:(Math.random()-.8)*220,l:1,c:k.c});
+        bits.push({x:k.x,y:k.y,txt:'+'+p,vy:-60,l:1,c:'#fff'});refresh();return}}
+    combo=0}
+  function drawKite(k){
+    x.save();x.translate(k.x,k.y);x.rotate(k.rot+Math.sin(k.age*3+k.ph)*.12);const s=k.s;
+    if(!k.cut){x.strokeStyle='rgba(255,255,255,.55)';x.lineWidth=1;x.beginPath();x.moveTo(0,s);x.quadraticCurveTo(-30,(H-k.y)*.5,-60+Math.sin(k.age)*20,H-k.y);x.stroke()}
+    x.strokeStyle=k.c;x.lineWidth=2.5;x.beginPath();x.moveTo(0,s*1.1);for(let i=1;i<=6;i++)x.lineTo(Math.sin(i*1.4+k.age*6)*7,s*1.1+i*9);x.stroke();
+    x.beginPath();x.moveTo(0,-s);x.lineTo(s*.75,0);x.lineTo(0,s*1.1);x.lineTo(-s*.75,0);x.closePath();x.fillStyle=k.c;x.fill();
+    x.lineWidth=1.5;x.strokeStyle='rgba(30,10,50,.6)';x.stroke();
+    x.beginPath();x.moveTo(0,-s);x.lineTo(0,s*1.1);x.moveTo(-s*.75,0);x.lineTo(s*.75,0);x.stroke();
+    x.fillStyle='rgba(255,255,255,.35)';x.beginPath();x.moveTo(0,-s);x.lineTo(s*.75,0);x.lineTo(0,0);x.fill();
+    if(k.gold){x.fillStyle='#fff';x.beginPath();x.arc(0,0,3,0,7);x.fill()}x.restore()}
+  function bg(){
+    const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#2b1a6b');g.addColorStop(.45,'#b2398f');g.addColorStop(.8,'#ff8a3d');g.addColorStop(1,'#ffd166');x.fillStyle=g;x.fillRect(0,0,W,H);
+    x.fillStyle='rgba(255,240,200,.9)';x.beginPath();x.arc(W*.78,H*.72,Math.min(W,H)*.1,0,7);x.fill();
+    x.fillStyle='#1a0f3a';x.beginPath();x.moveTo(0,H);const b=[[0,.9],[.08,.86],[.1,.8],[.12,.86],[.2,.86],[.24,.78],[.28,.86],[.4,.88],[.46,.82],[.5,.74],[.54,.82],[.6,.88],[.72,.88],[.78,.8],[.82,.88],[.92,.86],[1,.9]];
+    b.forEach(p=>x.lineTo(p[0]*W,p[1]*H));x.lineTo(W,H);x.fill();
+    x.beginPath();x.arc(W*.5,H*.8,W*.04,Math.PI,0);x.fill();x.fillRect(W*.5-1.5,H*.7,3,H*.1)}
+  function loop(now){
+    const dt=Math.min((now-prev)/1000,.05);prev=now;bg();
+    if(state==='run'){time-=dt;if(time<=0){time=0;state='over';sfx.win();burst(innerWidth/2,innerHeight/2,70);const bv=best('patang');if(bv==null||score>bv)store.set('best_patang',score);addPts('patang',score);refresh()}
+      if(Math.ceil(time)!==lastSec){lastSec=Math.ceil(time);refresh()}}
+    spawnT-=dt;if(spawnT<=0&&(state==='run'||(state==='idle'&&kites.length<5))){spawn();spawnT=state==='run'?.45+Math.random()*.5:1.1}
+    for(const k of kites){k.age+=dt;if(k.cut){k.vy+=520*dt;k.y+=k.vy*dt;k.x+=k.vx*.3*dt;k.rot+=dt*4}else{k.x+=k.vx*dt;k.y+=Math.sin(k.age*1.6+k.ph)*k.amp*dt;k.rot=Math.sin(k.age*1.3+k.ph)*.25}drawKite(k)}
+    kites=kites.filter(k=>k.cut?k.y<H+120:(k.x>-80&&k.x<W+80));
+    for(const b of bits){b.l-=dt*1.4;b.y+=b.vy*dt;if(b.txt){x.globalAlpha=Math.max(b.l,0);x.fillStyle=b.c;x.font='700 26px sans-serif';x.fillText(b.txt,b.x-10,b.y)}else{b.x+=b.vx*dt;b.vy+=500*dt;x.globalAlpha=Math.max(b.l,0);x.fillStyle=b.c;x.fillRect(b.x,b.y,5,5)}x.globalAlpha=1}
+    bits=bits.filter(b=>b.l>0);
+    raf=requestAnimationFrame(loop)}
+  function unmount(){cancelAnimationFrame(raf);removeEventListener('resize',onRes);root=null}
+  return{mount,refresh,unmount}
+})();
+/* ============ 4. PALLANGUZHI (seed-sowing, 7 pits a side, 5 seeds each) ============ */
+G.pallan=(()=>{
+  // 0-6 your pits (left to right), 7 your store, 8-14 computer pits, 15 computer store
+  const ST=[7,15];
+  let S,root,dead;
+  const side=(p,i)=>p===0?i<=6:(i>=8&&i<=14);
+  function sow(b,i,w){ // pure: returns {b,extra,last,cap}
+    b=b.slice();let n=b[i];b[i]=0;let pos=i;
+    while(n>0){pos=(pos+1)%16;if(pos===ST[1-w])continue;b[pos]++;n--}
+    let extra=pos===ST[w],cap=0;
+    if(!extra&&side(w,pos)&&b[pos]===1&&b[14-pos]>0){cap=b[14-pos]+1;b[ST[w]]+=cap;b[pos]=0;b[14-pos]=0}
+    return{b,extra,last:pos,cap}}
+  const mine=w=>w===0?[0,1,2,3,4,5,6]:[8,9,10,11,12,13,14];
+  function mount(r){
+    root=r;dead=false;S={b:Array(16).fill(5).map((v,i)=>i===7||i===15?0:v),turn:0,busy:false,over:false,hl:-1,msg:''};
+    const top=[14,13,12,11,10,9,8],bot=[0,1,2,3,4,5,6];
+    const pit=(i,m)=>`<button class="pit ${m?'mine':''}" data-i="${i}" ${m?'':'disabled'}><div class="dots"></div><span class="n"></span></button>`;
+    r.innerHTML=`<div class="pl"><div class="row"><div class="store" id="s15"></div>${top.map(i=>pit(i,false)).join('')}<div></div></div>
+      <div class="mid"><span></span><div class="msg" id="plMsg"></div><span></span></div>
+      <div class="row"><div></div>${bot.map(i=>pit(i,true)).join('')}<div class="store" id="s7"></div></div></div><div class="res" id="plWin" hidden></div>`;
+    r.querySelector('.pl').addEventListener('click',e=>{const b=e.target.closest('.pit.mine');if(b)move(0,+b.dataset.i)});
+    refresh()}
+  function refresh(){
+    if(!root)return;
+    root.querySelectorAll('.pit').forEach(p=>{const i=+p.dataset.i,n=S.b[i];
+      p.querySelector('.n').textContent=n;p.querySelector('.dots').innerHTML='<i></i>'.repeat(Math.min(n,18));
+      p.classList.toggle('hl',S.hl===i);if(p.classList.contains('mine'))p.disabled=S.busy||S.over||S.turn!==0||n===0});
+    $('#s7').innerHTML=`<span class="lbl">${t('you')}</span>${S.b[7]}`;$('#s15').innerHTML=`<span class="lbl">${t('cpu')}</span>${S.b[15]}`;
+    $('#plMsg').textContent=S.over?(S.b[7]>S.b[15]?t('youWin'):S.b[7]<S.b[15]?t('cpuWins'):'='):(S.turn?t('cpuTurn'):t('pickPit'));
+    stat('y',t('you'),S.b[7]);stat('c',t('cpu'),S.b[15]);
+    const w=$('#plWin');if(S.over&&S.b[7]>S.b[15]){w.hidden=false;w.innerHTML=`<div class="big">🎉</div><button class="btn" id="plAgain">${t('again')}</button>`}
+    else if(S.over){w.hidden=false;w.innerHTML=`<button class="btn" id="plAgain">${t('again')}</button>`}else w.hidden=true;
+    const a=$('#plAgain');if(a)a.onclick=()=>mount(root)}
+  async function move(w,i){
+    if(S.busy||S.over||S.turn!==w||S.b[i]===0)return;S.busy=true;
+    // animate the sowing seed by seed
+    let n=S.b[i];S.b[i]=0;let pos=i;S.hl=i;refresh();await sleep(220);
+    while(n>0){pos=(pos+1)%16;if(pos===ST[1-w])continue;S.b[pos]++;n--;S.hl=pos;sfx.step();refresh();await sleep(210);if(dead)return}
+    let extra=pos===ST[w];
+    if(!extra&&side(w,pos)&&S.b[pos]===1&&S.b[14-pos]>0){await sleep(250);S.b[ST[w]]+=S.b[14-pos]+1;S.b[pos]=0;S.b[14-pos]=0;sfx.good();if(w===0)burst(innerWidth/2,innerHeight/2,35)}
+    else if(extra)sfx.good();
+    S.hl=-1;
+    // end of game: one side empty
+    const empty=p=>mine(p).every(j=>S.b[j]===0);
+    if(empty(0)||empty(1)){for(const p of[0,1]){mine(p).forEach(j=>{S.b[ST[p]]+=S.b[j];S.b[j]=0})}
+      S.over=true;S.busy=false;refresh();if(S.b[7]>S.b[15]){sfx.win();burst()}else sfx.bad();
+      const sc=S.b[7];if(best('pallan')==null||sc>best('pallan'))store.set('best_pallan',sc);addPts('pallan',Math.round(sc*100/70));return}
+    S.busy=false;if(!extra)S.turn=1-w;refresh();
+    if(S.turn===1){await sleep(700);if(!dead)cpu()}}
+  function cpu(){
+    const opts=mine(1).filter(j=>S.b[j]>0).map(j=>{const r=sow(S.b,j,1);return{j,sc:(r.b[15]-S.b[15])+(r.extra?4:0)+Math.random()*.9}});
+    opts.sort((a,b)=>b.sc-a.sc);move(1,opts[0].j)}
+  function unmount(){dead=true;root=null}
+  return{mount,refresh,unmount}
+})();
+
+/* ============ 5. ITIHAAS QUIZ ============ */
+G.quiz=(()=>{
+  let S,root;
+  function mount(r){root=r;S={i:0,score:0,picked:-1,order:[],run:0};deal();refresh()}
+  function deal(){S.order=shuffle([0,1,2,3]);S.picked=-1}
+  function refresh(){
+    if(!root)return;const total=QZ.length;
+    if(S.i>=total){const stars=S.score>=total?3:S.score>=total-2?2:S.score>=total/2?1:0;
+      root.innerHTML=`<div class="res"><div class="stars">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div><h3 class="display">${t('result')}</h3><div class="big display">${S.score}/${total}</div><button class="btn" id="qzAgain">${t('again')}</button></div>`;
+      $('#qzAgain').onclick=()=>mount(root);stat('s',t('score'),S.score);return}
+    const q=QZ[S.i];
+    root.innerHTML=`<div class="qz"><div class="qbar"><i style="width:${S.i/total*100}%"></i></div><h3 class="display">${q.q[lang]}</h3>
+      <div class="opts">${S.order.map((oi,k)=>`<button class="opt ${S.picked<0?'':oi===0?'ok':k===S.picked?'no':''}" data-k="${k}" ${S.picked<0?'':'disabled'}>${q.o[lang][oi]}</button>`).join('')}</div>
+      ${S.picked>=0?`<button class="btn" id="qzNext">${t('next')} →</button>`:''}</div>`;
+    root.querySelectorAll('.opt').forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+    const nx=$('#qzNext');if(nx)nx.onclick=()=>{S.i++;deal();if(S.i>=total){const bv=best('quiz');if(bv==null||S.score>bv)store.set('best_quiz',S.score);addPts('quiz',Math.round(S.score*100/total));if(S.score>=total-1){sfx.win();burst()}}refresh()};
+    stat('q','#',(S.i+1)+'/'+total);stat('s',t('score'),S.score)}
+  function answer(k){if(S.picked>=0)return;S.picked=k;const ok=S.order[k]===0;if(ok){S.score++;sfx.good();burst(innerWidth/2,innerHeight/2,30)}else sfx.bad();refresh()}
+  function unmount(){root=null}
+  return{mount,refresh,unmount}
+})();
+
+renderHub();
+</script></body></html>
